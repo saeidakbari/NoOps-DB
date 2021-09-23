@@ -5,6 +5,13 @@ This should be the only module that you directly import classes, instead of the 
 import enum
 
 
+class Methods(enum.IntEnum):
+    """List of supported methods
+    """
+    LR = 0
+    DT = 1
+
+
 class Target(enum.IntEnum):
     """The output targets for the operating units
     """
