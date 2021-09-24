@@ -45,6 +45,16 @@ class Plotter:
             data, columns=self.__lables()).mean(axis=1)
         return data
 
+    def calOL(self) -> pd.DataFrame:
+        self.__loadResultFile()
+        if self.split == "bare":
+            self.splitTransformed()
+        elif self.split == "transform":
+            self.splitBare()
+
+        return self.DATA.groupby('Method').mean()
+
+
     def plotErrPerMethod(self):
         ous = self.calcOU()
         df = ous.pivot(index="OpUnit", columns="Method", values='AverageOU')
@@ -55,11 +65,21 @@ class Plotter:
         plt.ylabel('Error')
         plt.title('Average error per method')
 
+    def plotErrPerLabel(self):
+        ols = self.calOL()
+        df = ols.transpose()
+        print(df)
+        df.plot(kind='bar', figsize=(15, 5))
+
+        plt.xlabel('Target Metric')
+        plt.ylabel('Error')
+        plt.title('Average error per Label')
+
     def do(self):
         if self.type == "ou":
             self.plotErrPerMethod()
-        elif self.type == "":
-            pass
+        elif self.type == "ol":
+            self.plotErrPerLabel()
         else:
             self.plotErrPerMethod()
         plt.show()
