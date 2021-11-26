@@ -58,8 +58,7 @@ class Plotter:
     def plotErrPerMethod(self):
         ous = self.calcOU()
         df = ous.pivot(index="OpUnit", columns="Method", values='AverageOU')
-        df.plot(kind='bar', figsize=(15, 5), color=[
-                'red', 'blue', '#e37827', '#275444'])
+        df.plot(kind='bar', figsize=(15, 5))
 
         plt.xlabel('Op Unit')
         plt.ylabel('Error')
@@ -82,7 +81,7 @@ class Plotter:
             self.plotErrPerLabel()
         else:
             self.plotErrPerMethod()
-        plt.show()
+        plt.savefig('img/figure_{}_{}'.format(self.type, self.split))
 
 
 # ==============================================
